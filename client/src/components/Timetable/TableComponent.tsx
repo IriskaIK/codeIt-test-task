@@ -15,7 +15,7 @@ const TableComponent: React.FC<TableComponentProps> = ({records}) => {
             <Table striped highlightOnHover>
                 <Table.Thead>
                     <Table.Tr>
-                        <Table.Th>Id</Table.Th>
+                        <Table.Th>Delivery Id</Table.Th>
                         <Table.Th>Courier name</Table.Th>
                         <Table.Th>Destination point</Table.Th>
                         <Table.Th>Start date\time</Table.Th>

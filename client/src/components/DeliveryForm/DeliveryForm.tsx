@@ -68,9 +68,17 @@ const DeliveryForm: React.FC = () => {
 
     const  handleFormSubmit = async (values : FormContent) =>{
         const response = await submitForm(values)
+        console.log(response)
         if(response.status !== 'success'){
             setServerValidationError(response.message)
+            return;
         }
+        form.reset()
+        setServerValidationError('')
+    }
+
+    const handleClearForm = async (): Promise<void> => {
+        form.reset()
         setServerValidationError('')
     }
 
@@ -116,7 +124,7 @@ const DeliveryForm: React.FC = () => {
                                 <ValidationError message={serverValidationError}/>
                             )
                         }
-                        <ControlButtons form={form}/>
+                        <ControlButtons form={form} handleClear={handleClearForm} />
                     </Card>
 
 

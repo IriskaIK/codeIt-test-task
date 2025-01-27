@@ -11,7 +11,7 @@ const Timetable: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null)
 
 
-    const [strictRange, setStrictRange] = useState<boolean>(false)
+    const [strictRange, setStrictRange] = useState<boolean>(true)
 
 
     const [endDate, setEndDate] = useState<Date | null>(null)
@@ -21,7 +21,7 @@ const Timetable: React.FC = () => {
     const fetchRecords = async () => {
         try {
             setLoading(true)
-            const response = await getRecords(startDate, endDate);
+            const response = await getRecords(startDate, endDate, strictRange);
             setRecords(mapRecords(response.deliveries))
             setLoading(false)
         } catch (e) {

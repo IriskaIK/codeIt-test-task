@@ -6,7 +6,6 @@ export async function getFormOptions(): Promise<FormOptionsResponse>{
         const response = await fetch(config.apiUrl+'deliveries/options/');
         const data = await response.json();
 
-        console.log(data);
         return data;
     }catch (error) {
         if(error instanceof Error){

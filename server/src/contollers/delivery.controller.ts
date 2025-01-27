@@ -13,6 +13,8 @@ import {Destination} from "@/db/entities/Destination.entity";
 export async function createDeliveryRecord(req: Request<{}, {}, DeliveryCreateRecordDto>, res: Response, next: NextFunction) {
 
 
+    console.log(req.body)
+
     const validation = validateCreateRecord(req.body)
 
     if (!validation.valid) {
@@ -41,7 +43,7 @@ export async function createDeliveryRecord(req: Request<{}, {}, DeliveryCreateRe
 }
 
 export async function getDeliveries(req: Request<{}, {}, {}, FetchDeliveriesByDateQueryParams>, res: Response, next: NextFunction) {
-    const {startTime, endTime} = req.query
+    const {startTime, endTime, strict} = req.query
     const validation = validateGetRecords(req.params);
 
     if (!validation.valid) {
@@ -50,8 +52,7 @@ export async function getDeliveries(req: Request<{}, {}, {}, FetchDeliveriesByDa
     }
 
     try {
-        console.log(req.query)
-        const deliveries = await getDeliveriesByDate(startTime, endTime)
+        const deliveries = await getDeliveriesByDate(startTime, endTime, strict)
         res.status(200).json({deliveries: deliveries})
         return;
     } catch (error) {

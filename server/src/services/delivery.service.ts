@@ -6,20 +6,34 @@ import InvalidRequestError from "@/utils/errors/InvalidRequest.error";
 import InternalServerError from "@/utils/errors/InternalServer.error";
 import {validate} from "class-validator";
 
-export async function getDeliveriesByDate(startTime?: string, endTime?: string) {
+export async function getDeliveriesByDate(startTime?: string, endTime?: string, strict?: 'true' | 'false') {
     const deliveriesRepository = AppDataSource.getRepository(Delivery)
     const queryBuilder = deliveriesRepository
         .createQueryBuilder("deliveries")
         .leftJoinAndSelect('deliveries.courier', 'courier')
         .leftJoinAndSelect('deliveries.destination', 'destination')
-    if (startTime) {
-        queryBuilder.where("deliveries.startTime >= :startTime", {startTime})
-    }
-    if (endTime) {
-        queryBuilder.andWhere("deliveries.endTime <= :endTime", {endTime})
+
+
+    if(strict === 'true'){
+        if (startTime) {
+            queryBuilder.where("deliveries.startTime >= :startTime", {startTime})
+        }
+        if (endTime) {
+            queryBuilder.andWhere("deliveries.endTime <= :endTime", {endTime})
+        }
+    }else{
+
+        if (startTime && endTime) {
+            queryBuilder.where("deliveries.startTime >= :startTime AND deliveries.startTime <= :endTime", {startTime, endTime})
+                .orWhere("deliveries.endTime <= :endTime AND deliveries.endTime >= :startTime", {startTime, endTime})
+        }else if (endTime) {
+            queryBuilder.andWhere("deliveries.startTime <= :endTime", {endTime})
+        }else if(startTime){
+            queryBuilder.andWhere("deliveries.endTime >= :startTime", {startTime})
+        }
     }
 
-    return await queryBuilder.getMany()
+    return await queryBuilder.orderBy('deliveries.startTime').getMany()
 }
 
 

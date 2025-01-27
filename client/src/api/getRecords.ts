@@ -13,7 +13,7 @@ export interface Delivery{
 }
 
 
-export async function getRecords(startTime : Date | null, endTime : Date | null) : Promise<{deliveries : Delivery[] }> {
+export async function getRecords(startTime : Date | null, endTime : Date | null, strict : boolean = true) : Promise<{deliveries : Delivery[] }> {
     let startTimeParam =''
     let endTimeParam = ''
 
@@ -24,20 +24,18 @@ export async function getRecords(startTime : Date | null, endTime : Date | null)
         endTimeParam = endTime.toISOString();
     }
 
-    console.log(startTimeParam, endTimeParam)
 
     const queryParams = new URLSearchParams({
         startTime: startTimeParam ? startTimeParam : '',
         endTime: endTimeParam ? endTimeParam : '',
+        strict : strict ? 'true' : 'false'
     }).toString();
 
-    console.log(queryParams)
 
     try {
         const response = await fetch(`${config.apiUrl}deliveries?${queryParams}`);
         const data = await response.json();
 
-        console.log(data);
         return data;
     }catch (error) {
         if(error instanceof Error){

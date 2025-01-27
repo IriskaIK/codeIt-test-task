@@ -5,10 +5,11 @@ import FormType from "types/form.type";
 
 interface ControlButtonProps {
     form : UseFormReturnType<FormType>
+    handleClear : () => void
 }
 
 
-const ControlButtons : React.FC<ControlButtonProps> = ({form}) =>{
+const ControlButtons : React.FC<ControlButtonProps> = ({form, handleClear}) =>{
 
     return (
         <>
@@ -16,7 +17,7 @@ const ControlButtons : React.FC<ControlButtonProps> = ({form}) =>{
                 <Button color='green' disabled={!form.isValid()} type='submit'>
                     Submit
                 </Button>
-                <Button color='red'>
+                <Button color='red' onClick={handleClear}>
                     Clear
                 </Button>
             </Group>

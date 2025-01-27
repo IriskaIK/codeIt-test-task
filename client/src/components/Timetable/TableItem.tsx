@@ -10,8 +10,22 @@ interface TableItemProps {
 const TableItem: React.FC<TableItemProps> = ({item}) => {
 
     const parseDateTime = (dateTime : string)=>{
+
         const date = new Date(dateTime);
-        return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
+        const pad = (num: number) => num.toString().padStart(2, '0');
+
+        const day = pad(date.getDate());
+        const month = pad(date.getMonth() + 1); // Months are zero-based
+        const year = date.getFullYear();
+        const hours = pad(date.getHours());
+        const minutes = pad(date.getMinutes());
+
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+
+
+        // return date.toLocaleDateString() + " " + date.toLocaleTimeString()
+        // return date.getDay()+1 + "/" + date.getMonth()+1 + "/" + date.getFullYear() + " " + date.toLocaleTimeString();
     }
 
 
