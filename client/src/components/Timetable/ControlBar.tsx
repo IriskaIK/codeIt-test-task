@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Group, Tooltip} from "@mantine/core";
 import {DateTimePicker} from "@mantine/dates";
 
@@ -15,6 +15,17 @@ interface ControlBarProps {
 }
 
 const ControlBar: React.FC<ControlBarProps> = (props) => {
+    const [isValid, setIsValid] = useState<boolean>(true)
+
+    useEffect(() => {
+        if (props.startValue && props.endValue && props.startValue > props.endValue) {
+            setIsValid(false);
+        } else {
+            setIsValid(true);
+        }
+    }, [props.startValue, props.endValue]);
+
+
     return (
         <>
             <Group align={'flex-end'} grow>
@@ -22,6 +33,7 @@ const ControlBar: React.FC<ControlBarProps> = (props) => {
                     label={'Start date/time'}
                     value={props.startValue}
                     onChange={(value) => props.setStart(value)}
+                    error={isValid ? null : "Invalid date"}
                 />
 
 
@@ -29,6 +41,7 @@ const ControlBar: React.FC<ControlBarProps> = (props) => {
                     label={'End date/time'}
                     value={props.endValue}
                     onChange={(value) => props.setEnd(value)}
+                    error={isValid ? null : "Invalid date"}
                 />
 
 
@@ -38,7 +51,7 @@ const ControlBar: React.FC<ControlBarProps> = (props) => {
                 </Tooltip>
 
 
-                <Button onClick={props.getRecords}>
+                <Button onClick={props.getRecords} disabled={!isValid}>
                     Search
                 </Button>
 

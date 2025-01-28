@@ -5,14 +5,17 @@ import {AppDataSource} from "@/db/data-source";
 import deliveryRouter from "@/routes/delivery.router";
 import courierRouter from "@/routes/courier.router";
 import destinationsRouter from "@/routes/destinations.router";
+import config from "@/config/config";
 
 
 AppDataSource
     .initialize()
     .then(() => {
+
         console.log("App Data Source initialized");
     })
     .catch((err) => {
+        console.log(config)
         console.error("Error while initializing", err);
     })
 
