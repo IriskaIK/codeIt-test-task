@@ -68,7 +68,6 @@ const DeliveryForm: React.FC = () => {
 
     const  handleFormSubmit = async (values : FormContent) =>{
         const response = await submitForm(values)
-        console.log(response)
         if(response.status !== 'success'){
             setServerValidationError(response.message)
             return;

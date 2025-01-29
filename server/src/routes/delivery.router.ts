@@ -8,8 +8,6 @@ router.get('/options', getOptions)
 
 
 router.get('/', getDeliveries)
-router.get('/:id')
-
 
 router.post('/', createDeliveryRecord)
 

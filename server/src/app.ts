@@ -15,7 +15,6 @@ AppDataSource
         console.log("App Data Source initialized");
     })
     .catch((err) => {
-        console.log(config)
         console.error("Error while initializing", err);
     })
 

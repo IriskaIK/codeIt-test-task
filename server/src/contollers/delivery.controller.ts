@@ -13,7 +13,6 @@ import {Destination} from "@/db/entities/Destination.entity";
 export async function createDeliveryRecord(req: Request<{}, {}, DeliveryCreateRecordDto>, res: Response, next: NextFunction) {
 
 
-    console.log(req.body)
 
     const validation = validateCreateRecord(req.body)
 
